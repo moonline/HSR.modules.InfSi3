@@ -22,3 +22,8 @@ Build ReST (.rst) files
 		
 		example:
 		rst2html "RepetitionQuestions.rst" "/tmp/repetitionQuestions/"
+
+ReST Syntax
+-----------
+
+ReST Syntax Manual: http://docutils.sourceforge.net/docs/user/rst/quickref.html
