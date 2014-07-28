@@ -136,7 +136,7 @@ Services wie Maps, Local Searches, Tracking, Trafic, Friend finders, Augmented R
 	* Über mehrere Masten oft genauer als eine Zelle
 	* GSM Antennenstandortdatenbanken -> Lokalisierung über Zellenif
 	
-.. figure:: 2.3.jpg
+.. figure:: img/2.3.jpg
 
 
 * WLAN
