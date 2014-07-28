@@ -150,7 +150,7 @@ Services wie Maps, Local Searches, Tracking, Trafic, Friend finders, Augmented R
 	* Mit Korrekturdaten SBAS/EGNOS bis 30cm
 	* Tracking von Fussballspielern möglich
 	* z.B. für Flottenmanagement -> Fahrzeugracking
-	* Genauigkeit hängt von der Anzahl
+	* Genauigkeit hängt von der Anzahl sichtbarer Satelliten ab
 	* AGPS: Korrekturdaten (Azimute) für die genaue Position der Sateliten wird nicht von den Sateliten heruntergeladen sondern vom Netz geladen
 	* Diferenzielles GPS: Basisstation deren Position bekannt ist. Dadurch erhält man Korrekturdaten zur Positionsoptimierung. Daten werden über GSM oder über den GPS Kanal übertragen.
 		* -> Ermöglicht Positionierung im cm - mm Bereich
@@ -606,29 +606,29 @@ Client Side Code Execution
 OWASP
 -----
 
-.. image:: 5.13.jpg
+.. image:: img/5.13.jpg
    :width: 80 %
 
 
-.. figure:: 5.14.jpg
+.. figure:: img/5.14.jpg
    :width: 80 %
    
    OWASP Tut. Serie 1
    
 
-.. figure:: 5.15.jpg
+.. figure:: img/5.15.jpg
    :width: 80 %
 
    Web Application Sec. Status
 
 
-.. figure:: 5.16.jpg
+.. figure:: img/5.16.jpg
    :width: 80 %
 
    OWASP Top 10 Vulnerabilities
 
 
-.. image:: 5.17.jpg
+.. image:: img/5.17.jpg
    :width: 80 %
 
    
