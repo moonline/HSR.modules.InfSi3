@@ -28,10 +28,10 @@ Skizzieren Sie das bereits aus InfSi1 bekannte Model und ordnen Sie die Begriffe
 **1.0.2.**
 Mit welcher Massnahme aus dem Massnahmenkatalog erreichen sie mit am wenigsten Aufwand am meissten Sicherheitsgewinn?
 
-**1.0.2.**
+**1.0.3.**
 Erklären Sie das Risikomodell und skizzieren Sie das Diagramm Kosten/Sicherheit. Tragen Sie darin sowohl die Kosten für Security wie die Kosten von Schäden ein.
 
-**1.0.3.**
+**1.0.4.**
 Was ist der Hauptgrund, weshalb IT Konzerne Sicherheitsmassnamhmen treffen?
 
 
@@ -208,7 +208,8 @@ Auf welchen drei Säulen ruht Software Security Knowledge?
 **3.0.10.**
 Erklären Sie die Grafik.
 
-.. image:: /img/3.8.jpg
+.. image:: img/3.8.jpg
+   :width: 75 %
 
 
 **3.0.11.**
