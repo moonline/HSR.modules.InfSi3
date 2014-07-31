@@ -134,7 +134,7 @@ Was ist Lokalisierung über "Beacons"?
 Was sind e-Plate Long-Range Tags?
 
 **2.1.11.**
-Wie genaue Lokalisierung ist mit Bloetooth und RFID möglich? Wie genau mit GSP?
+Wie genaue Lokalisierung ist mit Bluetooth und RFID möglich? Wie genau mit GSP?
 
 **2.1.12.**
 Wie sieht die Datenschutzrechtliche Situation aus beim Einsatz von GSP Systemen zum Flottenmanagement und zur Arbeitszeitüberwachung?
@@ -143,7 +143,7 @@ Wie sieht die Datenschutzrechtliche Situation aus beim Einsatz von GSP Systemen 
 Was versteht man unter "bewusster Bekanntgabe von Lokationsdaten"? Machen Sie ein Paar Beispiele.
 
 **2.1.14.**
-Was versteht man unter "unbewusste Bekanntgabe von Lakationsdaten"? Machen Sie ein Paar Beispiele.
+Was versteht man unter "unbewusste Bekanntgabe von Lokationsdaten"? Machen Sie ein Paar Beispiele.
 
 **2.1.15.**
 Welche Informationen erhält Google über einen Nutzer?

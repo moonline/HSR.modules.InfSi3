@@ -197,3 +197,124 @@ b) Zu Beachten
 2.1 Methoden zur Lokalisierung von Objekten
 -------------------------------------------
 
+**2.1.1. Passive Standortpreisgabe Beispiele**
+
+* Online Fahrplan
+* Google Maps
+* Navi
+* Wetter Apps
+
+
+**2.1.2. Standortbekanntgabe bei Browsern**
+
+Der Browser schickt alles, was er hat:
+
+* Sichtbare WLAN Netzwerke
+* IP
+
+
+**2.1.3. Lokationsdaten**
+
+Lokationsdaten, die mit einer Person verknüpft sind (auch IP Adressen) sind in CH Personendaten.
+
+
+**2.1.4. IP Lokalisierung**
+
+Über IP wird zugeteilter Provider ermittelt -> Zugangsknoten von ISP ist genauste mögliche Location.
+
+
+**2.1.5. IP Adresse als Personendatum**
+
+Da die IP mit der Identität eines Benutzers verknüpft ist sie das und unterliegt damit dem DSG.
+
+
+**2.1.6. Cell Tower Localization**
+
+* Provider weiss, in welcher Zelle sich ein Benutzer befindet
+* Handy sieht jedoch mehrere Antennen und kann über einen Antennenstandortdatenbank mittels Triangulation ziemlich genau seine Position orten
+
+
+**2.1.7. GSM Netz**
+
+Ein Mobiltelefon gibt folgende Daten in einem GSM Netz preis:
+
+* Identität, TeilnehmeriID+Verschlüsselungskeys auf SIM (GSM besitzt eine Authentisierung)
+* Zelle (Standort auf weniger als eine Zelle genau da mit den Signallaufzeiten gearbeitet wird)
+	* Location Area ID
+	* Cell ID
+	* Timing Advance
+* Die weltweit eindeutige TeilnehmeriID wird auf der Luftschnittstelle verborgen und stattdessen eine temporäre verwendet, um Mithörer diese nicht preiszugeben
+
+
+**2.1.8. Wlan Ortung**
+
+* Nutzer gibt seine Mac Adresse Preis (Weltweit eindeutig)
+* Ortung erfolgt über WLAN Datenbanken
+
+**2.1.9. Beacons**
+
+* Kurz- und Langdistanz RFID/Bluetooth Tags Zur Identifikation von Fahrzeugen (langdistanz) oder Personen in Gebäuden (Kurzdistanz)
+* Smartphones verbinden sich mit Beacons an Messen
+
+
+**2.1.10. E-Plate Long Range Tags**
+
+Aktive RFID Tags in Kennzeichen, auslesbar auch 100m Entfernung und bis 320 Km/h
+
+
+**2.1.11. Genauigkeit der Lokalisierung**
+
+* Bluetooth/Beacons Kurzdistanz: Bis 2m
+* GPS: Bis 15m, mit Korrekturdaten bis im cm Bereich
+
+
+**2.1.12. GSP zur Flottenüberwachung**
+
+Der Arbeitgeber überwacht damit den Mitarbeiter und trackt diesen Kontinuierlich. Der MA muss darüber informiert werden und sein Einverständnis geben.
+
+
+**2.1.13. bewusste Bekanntgabe von Lokationsdaten**
+
+Der Benutzer tätigt eine Handlung, mit der er seine Position bekannt gibt. Z.B:
+
+* Hochladen eines Bildes mit GPS Daten
+* Friends Finder (Standort Sharen)
+* Facebook Places (An einem Ort "einchecken")
+* Flicker Foto Upload: Standort auf Karte einzeichnen
+
+
+**2.1.14. unbewusste Bekanntgabe von Lokationsdaten**
+
+Die Bekanntgabe des Standortes ist ein Nebeneffekt eines genutzten Dienstes, z.B.:
+
+* Wetter Apps
+* Activity Tracker
+* Google Suche (Browser Footprint, IP)
+* CDN Abrufe
+* Proxy
+
+
+**2.1.15. Google**
+
+Google hat ziemliche Umfangreiche Informationen über Benutzer, da sie auf sehr vielen Webseiten mit Google Analytics drinhangen und sehr viele Dienst betreiben, auf denen User breitwillig Informationenpreisgeben:
+
+* Surfverhalten / Vorlieben (Suche)
+* Freunde / Familie (Google+)
+* Standort (Google Maps, Google Buzz, Google Glass, Autonome Fahrzeuge)
+* Reisen (Flugvergleiche, Fahrpläne)
+* Informationen über benutzes Gerät sowie online-Zeiten (Schalfverhalten)
+
+
+**2.1.16. Browser Fingerprint**
+
+* Browser / Device / BS / Auflösung / Sprache / Lokalisierung
+* Standort / ISP
+* Unterstützte JS Schnittstellen / Aktivierte Plugins / Addons / Media Support
+* Browsereinstellungen wie "Do Not Track" / JS ein/aus / Cookie settings
+* Local Storage / Flash Storage
+
+
+3 Software Security
+===================
+
+Die Kombination dieser Merkmale ist einmahlig und damit der Benutzer eindeutig zuortbar/idenitifizierbar.
