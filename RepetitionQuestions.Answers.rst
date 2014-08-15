@@ -313,8 +313,149 @@ Google hat ziemliche Umfangreiche Informationen über Benutzer, da sie auf sehr 
 * Browsereinstellungen wie "Do Not Track" / JS ein/aus / Cookie settings
 * Local Storage / Flash Storage
 
+Die Kombination dieser Merkmale ist einmahlig und damit der Benutzer eindeutig zuortbar/idenitifizierbar.
+
 
 3 Software Security
 ===================
 
-Die Kombination dieser Merkmale ist einmahlig und damit der Benutzer eindeutig zuortbar/idenitifizierbar.
+**3.0.1. Potentiell gefährliche Funktionen**
+
+* Auffinden mit Blacklist (Tool)
+* Massnahme gegen erneuten Fehler später: Tests
+
+
+**3.0.2. Connectivity, Extensibility, Complexity**
+
+Connectivity
+	Jede Software ist mittlerweile über das Netz verbunden und somit einem grossen Angriffsrisiko ausgesetzt -> müsste sich entsprechend verteidigen
+Extensibility
+	Software selbst ist ausgereift und sicher aber Erweiterungen bringen wieder Schwachstellen ein
+Complexity
+	Zunehmende Komplexität erhöht die Fehlerwahrscheinlichkeit und somit die Wahrscheinlichkeit, das ein Security Problem vorliegt.
+	
+
+**3.0.3. Bugs, Flaws, Defects**
+
+Bugs
+	* Fehler im Code (Falschbenutzung von Schnittstellen)
+	* Implementation Level Fehler
+	* Maschinell auffindbar
+	* z.B. Buffer Overflow, Race Condition, Unsave system call
+Flaws
+	* Falscher Programmfluss, Nicht behandeln von Spezialfällen
+	* Design Level Fehler
+	* Mit Code Analyse Tools nicht auffindbar
+	* z.B: Method Overriding, error handling, type save confusion
+Defect
+	Überbegriff für Bugs und Flaws
+	
+
+**3.0.4. Bug oder Flaw?**
+
+
+1) Rückgabewert von Read() ignored
+   -> Bug
+2) Verwendung von strlen() auf einem Wert, der nicht garantiert mit einem 0-Byte terminiert
+   -> Bug
+3) Speicherung von Benutzerpasswörtern als Klartext in der Datenbank
+   -> Flaw
+4) Passwort des Users mit memcmp mit Passwort in der DB vergleichen. Wenn der Rückgabewert von memcmp != 0 wird der Zugriff geblockt (memcamp("", password) gibt auch 0 zurück).
+   -> Bug (Ja nach Definition könnte es auch ein Flaw sein)
+
+
+**3.0.5. Software Security Basics**
+
+* Risk management
+	* Business and technical risk
+	* Risk priorisation
+	* Mitigation strategies
+* Best practices
+	* Code Review
+	* Risk analysis
+	* Penetration testing
+* Knowledge
+	* Prescriptive Knowledge(Principles/Guidelines)
+	* Diagnostics (Vulnerabilitis, Exploits, Attacks)
+	* Historical risks
+	
+	
+**3.0.6. Risiko**
+
+Setzt sich zusammen aus Schaden (Schadensausmass) und Eintrittswahrscheinlichkeit (Verletzlichkeiten, Bedrohung)
+
+.. image:: img/rq-1.0.3.1.jpg
+   :width: 50 %
+
+
+Es sollte so viel Geld in Security investiert werden, das die Gesammtkosten (Schaden + Massnahmen) minimal sind.
+
+
+**3.0.7a. Best Practises**
+
+1) Code Review
+2) Risiko Analysen
+3) Penetration Testing
+
+
+**3.0.7b. Massnahmen & Artefakte**
+
+i) Requirements & Use Cases
+	* 7 Abuse Cases
+	* 4 Security Requirements
+	* 3 Risk Analysis
+ii) Architecture & Design
+	* 3 Risk Analysis
+iii) Test Plans
+	* 6 Risk based Security Testing
+iv) Code
+	* 2 Code Reviews
+v) Tests & Test Results
+	* 5 Penetration testing
+	* 3 Risk Analysis
+vi) Feedback from the Field
+	* 5 Penetration testing
+	* 1 Security Operation
+	
+	
+**3.0.8. Barry Boehms Cost of Change Law**
+
+Mit jeder Phase im SW-Entstehungsprozess steigen die Kosten, wobei sie exponentiell steigen.
+Bugs, die während der Entwicklung gefunden werden, sind um Faktoren günstiger, als Bugs, die beim Kunden gefixt werdne müssen.
+
+
+**3.0.9. Software Security Knowledge**
+
+* Prescriptive Knowledge
+	* Principles
+	* Guidelines
+	* Rules
+* Diagnostic Knowledge
+	* Vulnerabilitis
+	* Attacks
+	* Exploits
+* Historical Knowledge
+	* Historical risks
+	
+
+**3.0.10. Security Knowledge Architecture**
+
+.. figure:: img/3.8.jpg
+   :width: 75 %
+
+   Exploits sind erkannte Verletzlichkeiten. Aus diesen ergeben sich Angriffsmuster und Historische Risikodaten. Zum Verhindern von Verletzlichkeiten kommen Prinzipien (Guidelines, Rules) zum Einsatz.
+
+
+**3.0.11 Code Review Tools**
+
+1) Code Scanners: Scannen den Code nach Patterns (Regex)
+2) Advanced Source Code Analysis Tools: Führen den Code aus und analysieren den Code Fluss. Diese finden auch falsch Verwendete Schnittstellen etc. die nicht auf den ersten Blick ersichtlich sind.
+
+
+**3.0.12. Architectural Risk Analysis**
+
+* Analyse über die Attenresistenz (Checklisten zum Finden von bekannten Problemen)
+* Mehrdeutigkeitsanalyse (Unklarheiten in den Architekturdokumentationen)
+* Schwächenanalyse (Analyse von Abhängigkeiten von externen Tools und Frameworks und dadurch entstehende Schwächen)
+
+

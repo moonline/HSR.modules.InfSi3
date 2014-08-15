@@ -178,11 +178,11 @@ Erklären Sie die drei Säulen von Software Security.
 **3.0.6.**
 Was ist Risiko (Definition). Skizzieren Sie grafisch, wie viel Geld in Security investiert werden sollte (qualitatives Diagramm).
 
-**3.0.6.**
+**3.0.7a.**
 Welches sind die drei "Best Practises", die am meissten Security bringen? Warum sind Massnahmen mit Blackhat Activities schwierig umzusetzen?
 
-**3.0.7.**
-Ordnen Sie die folgenden Massnahmen den Artefakten zu.
+**3.0.7b.**
+Ordnen Sie die folgenden Massnahmen den Artefakten zu (Massnahmen können auch mehreren Artefakten zugeordnet werden).
 
 1) Security Operation
 2) Code Reviews
