@@ -459,3 +459,316 @@ Bugs, die während der Entwicklung gefunden werden, sind um Faktoren günstiger,
 * Schwächenanalyse (Analyse von Abhängigkeiten von externen Tools und Frameworks und dadurch entstehende Schwächen)
 
 
+
+4 Microsoft Security Livecylce
+==============================
+
+**4.0.1. Continious Process Improvement & Accountability**
+
+Continious Process Improvement
+	* Ständiger Verbesserungsprozess des Security Livecylce
+		* Vier Levels: Basic, Standardized, Advanced, Dynamic
+	* Disciplines (In jeder Discipline wird Kontinuierlich versucht, ein höheres Level zu erreichen)
+		* Schulungen, Policy, organisatorische Fähigkeiten
+		* Anforderungen & Design
+		* Implementierung
+		* Verifizierung
+		* Release & Response
+Accountability
+	* Definierte Verantwortlichkeiten für den Fall eines Vorfalls
+	* Wenn was passiert, schnell rausfinden, was passiert ist (Release and Response)
+	* Zugriff für alle Beteiligten (Public Repo)
+	* Im Falle eines Vorfalles soll schnell und richtig reagiert werden
+	
+	
+**4.0.2. Security Livecylce**
+
+::
+
+	.-------------------+-------------------------------------------------------------.
+	| 1) Training       | Core Security training                                      |
+	'---------------------------------------v-----------------------------------------'
+	.-------------------+-------------------------------------------------------------.
+	| 2) Requirements   | * Establish Security Requirements                           |
+	|                   | '-> Experten einbeziehen                                    |
+	|                   | * Create Quality gates / Bug bars                           |
+	|                   | '-> Produkt erst freigeben, wenn Bug/w Rate unterschritten  |
+	|                   | * Security & Privacy Risk Assessment (R. minimieren/tragen) |
+	'---------------------------------------v-----------------------------------------'
+	.-------------------+-------------------------------------------------------------.
+	| 3) Design         | * Establish Design Requirements                             |
+	|                   | * Analyse Attack Surface                                    |
+	|                   | '-> z.B. einhalten von "Least Priviledge"                   |
+	|                   | * Threat Modelling                                          |
+	|                   | '-> Checklisten/Regeln (z.B. BSI Handbuch)                  |
+	'---------------------------------------v-----------------------------------------'
+	.-------------------+-------------------------------------------------------------.
+	| 4) Implementation | * Use Aprooved Tools (z.B. Code analysis tools)             |
+	|                   | * Deprecate Unsafe Functions                                |
+	|                   | * Static Analysis (Bugs finden)                             |
+	'---------------------------------------v-----------------------------------------'
+	.-------------------+-------------------------------------------------------------.
+	| 5) Verification   | * Dynamic Analysis                                          |
+	|                   | '-> Flaws finden, korrekte Implementierung überprüfen       |
+	|                   | * Fuzzy Testing (Mit randoom input fluten)                  |
+	|                   | * Attack Surface Review                                     |
+	'---------------------------------------v-----------------------------------------'
+	.-------------------+-------------------------------------------------------------.
+	| 6) Release        | * Incident Response Plan                                    |
+	|                   | * Final Security Review                                     |
+	|                   | * Release Archive                                           |
+	'---------------------------------------v-----------------------------------------'
+	.-------------------+-------------------------------------------------------------.
+	| 7) Response       | Execute Incident Response Plan                              |
+	|                   | '-> Verfügbarkeit von Personen für Ernstfall                |
+	'---------------------------------------------------------------------------------'
+
+
+**4.0.3. Begriffe**
+
+Quality gates / bug bars
+	Gefundene Bugs/Woche muss best. Rate unterschreiten, damit das Release freigegeben wird
+Risk Assessment
+	Risiken minimieren, kleine Risiken tragen
+Analyse Attack Surface
+	Angriffsmöglichkeiten untersuchen, einhalten von Regeln wie z.B. "Least Priviledge"
+Threat Modelling
+	Mit Checklisten/Regeln Angriffsmöglichkeiten untersuchen (z.B. BSI Handbuch)
+Fuzzy Testing
+	Fluten mit Randoom Input
+Dynamic Analysis
+	Verhalten analysieren, macht das Programm, was es soll
+Static Analyis
+	Bugs finden
+Response Plan
+	Verantwirtlichkeiten, Verfügbarkeiten von Personen für Ernstfall
+	
+
+	
+5 Web Application Security
+==========================
+
+**5.0.1. Web Applications**
+
+* Über das Netz erreichbare Services (Zugriff von überall)
+* Meisst Client/Server Architektur, Multi Tier Architektur
+* Universellen Client (Browser), der nicht kontrolliert werden kann
+* Direkter Zugriff zu Backend Data
+
+
+**5.0.2. Web Application Architecture**
+
+::
+
+	.----------------------------------------------------------.
+	|                          Client                          |
+	'----------------------------------------------------------'
+	                             ^ |
+	                             | | Internet
+	                             | |
+	.----------------------------------------------------------.
+	|              Server Network / Company Network            |
+	|                            | |                           |
+	|                            | v                           |
+	| .------------------------------------------------------. |
+	| |              Router, Firewall, Switching             | |
+	| '------------------------------------------------------' |
+	|                            ^ |                           |
+	|                            | v                           |
+	| .----------------..------------------..----------------. |
+	| |                ||    Web Servers   ||                | |
+	| '----------------''------------------''----------------' |
+	|                             |                            |
+	| .------------------------------------------------------. |
+	| |                Web Application Server                | |
+	| '------------------------------------------------------' |
+	|          .------------------'------------------.         |
+	| .---------------. .------------------. .---------------. |
+	| |               |-| Database Servers |-|               | |
+	| '---------------' '------------------' '---------------' |
+	'----------------------------------------------------------'
+
+
+**5.0.3. Cookies**
+
+* Textdateien, die im Browser abgelegt werden (Speicherung von Requestübergreifender Information Clientseitig)
+* Nur Scripts der Domain, die das Cookie gesetzt haben, dürfen es auch wieder lesen
+
+.. code-block:: HTTP
+
+	// scheme ame=value; name2=value2
+	Cookie: LSID=DQAAAK…Eaem_vYg; Path=/accounts; Expires=Wed, 13 Jan 2021 22:23:01 GMT; Secure; HttpOnly; Domain=hsr.ch;
+	
+	
+**5.0.4. Session Management**
+
+1) Benutzer verbindet sich mit Server, loggt sich ein falls nötig
+2) Server erzeugt eindeutige, nicht erratbare Session ID
+3) Server speichert Session zu ID bei sich ab und schickt Session ID an Client
+4) Client sendet Session ID bei jedem Request wieder mit, sodass der Server weiss, wer er ist
+
+::
+
+	                   Client              Web Server           App Server           DB Server
+	                  
+	Application Session  |<---------------------------------------->|
+	
+	HTTP Session         |<------------------->|
+	
+	Internal Session                           |<------------------>|
+	
+	Db Session                                                      |<------------------>|
+	
+	TCP Session         |<------------------->|<------------------->|<------------------>|
+	
+
+**5.0.5. Arten von Cookies**
+
+Session Cookie
+	* Speichert Session ID
+	* Nicht persistent (Browser Memory)
+	* Keine "expire time"
+Persistent Cookie
+	* In File abgelegt
+	* Expire time
+Secure Cookie
+	* Darf nur über SSL/TLS Verbindungen transportiert werden
+3rd Party Cookie
+	* Wurde nicht von der ursprünglichen Seite gesetzt
+HTTP Only Cookie
+	* Nur durch HTTP auslesbar (Nicht durch JS)
+
+**Supercookie**
+
+* z.B. Flash Cookies
+* Schwieriger zu finden und entfernen, Cookie-Remove Mechanismen von Browser finden sie nicht
+* Werden an unterschiedlichen Orten gespeichert, z.B. in einem durch ein Flash Plugin angelegten File
+* Erweiterte Funktionen, wie z.B. reguläre Cookies reaktivieren/verlängern
+
+
+**5.0.6. E-Tags**
+
+* Information, ob sich Seite beim Browser im Cache befunden hatte (Caching Kontrolle)
+* Kann als Seitencookie gentzt werden, da zu jeder aufgerufenen Seite eine eindeutige ID gespeichert wird
+
+
+**5.0.7. Cookie read/write access**
+
+* Same Origin Policy: Nur Scripts vom gleichen Ursprung dürfen ein Cookie lesen
+
+
+**5.0.8. Same Origin Policy**
+
+* Port+Host+Protocoll stimmen überrein
+* IP =! URL
+* ABER gleiche Domain mit unterschiedlichen IP's (mehrere Web-Server) = Same Origin
+
+
+**5.0.9. 3rd Party Cookie Data Mining**
+
+1) Geladene Seite bindet über Skript ein Werbebanner eines Werbeanbieters ein und übermittelt Info über Domain (Damit die Werbeanbieter den Zugriff einem Werbekunden zuordnen können)
+	.. code-block:: HTML
+	
+		<script>
+			// create banner image from remote
+			var bannerImage = document.createElement('img');
+			bannerImage.outerHTML = '<img src="http://www.adtech.com/ad/?page=20min" />';
+			
+			document.getElementByTagName('body')[0].appendChild(bannerImage);
+		</scipt>
+		
+2) Browser lädt eingebundenes Element. Dadurch erhält der Werbeanbierter die gleichen Informationen über den Client, die der Anbieter der ursprünglichen Seite auch hat (Browser, BS, Auflösung, Plugins, IP, Location, ...). Durch einen Parameter im Aufruf des Elements erfährt der Werbeanbieter, wessen von seinen Werbekunden (im Beispiel 20min.ch) er den Aufruf zuordnen muss.
+3) Der Werbeanbieter setzt ein Cookie oder Supercookie um die Client beim nächsten Mal wiedererkennen zu können. Diese Wiedererkennung funktioniert aber auch über den Browser Footprint.
+4) Wird die Werbung dieses Werbeanbieters von ganz vielen Seiten eingebunden (wie z.B. Google Analytics), so kann der Werbeanbierter Clients über Webseiten hinweg verfolgen und Persönlichkeitsprofile erstellen.
+
+
+**5.0.10. P3P**
+
+* Privacy Policy
+* Deklaration der Seite, was mit welchen Daten geschieht
+* Matcht die Policy nicht, wird die Seite nicht geladen
+* Problem: Selbstdeklaration
+
+
+**5.0.11. Sandboxing**
+
+* Code wird in einem Container ausgeführt, aus dem er nicht ausbrechen kann
+* Code hat beschränkten Ressourcen und API Zugriff
+* Dem Code wird grundsätzlich nicht vertraut
+
+
+**5.0.12. Rechte und Möglichkeiten**
+
+JavaScript
+	* Ohne Warnung
+		* Remote Verbindungen
+		* Video/Audio
+		* Local Storage
+		* Local DB
+	* Mit Nachfrage
+		* GeoLocation
+		* File Access
+		* Camera/Microphone Access
+
+Flash
+	* Remote Verbindungen
+	* File Access
+	* Camera/Microphone
+ActiveX
+	* Remote Verbindungen
+	* File Access
+Java Plugin
+	* Remote Verbindungen
+	* File Access
+
+
+5.1 OWASP
+---------
+
+**5.1.1. OWASP**
+
+Open Web App Security Project
+
+
+**5.1.2. Häufigste Vulnerabilitis**
+
+1) Injection
+2) Broken Authentication and Session Management
+3) Cross Site Scripting
+
+
+**5.1.3. Injection Flaws**
+
+* Einschleusen von Code über Benutzereingaben
+* Aämmtliche Benutzereingaben müssen validiert werden
+	* Whitelisting (allow none, allow some)
+	* Blacklisting (allow all, disallow some)
+	* Escaping (Replace bad data)
+	
+* Massnahmen gegen Injection
+	* Review
+	* Avoid external params
+	* limit priviledges of app
+	* validate ALL input
+	* use system functions instead of own (e.g. prepared statements)
+
+
+**5.1.4. Broken Authentication & Session Management**
+
+* Umgehen von Authentication
+* Login attacks (user/pw enumeration)
+* Stehlen von Session/Session fixation
+* Fehlende Verschlüsselung/Signaturen -> Modifikation von Session/Login Daten (z.B. Modifikation von SAML assertions, umleitungen)
+
+
+Massnahmen:
+
+* IMMER Cookies benutzen, Session ID nie in der URL oder post übergeben, Secure Cookies nutzen
+* User auf allen Tiers authentifizieren (Extern Session ID/intern mappen)
+* keine eigenen Krypto Implementationen
+* lange Ursername/PW etablieren, failed logins loggen
+* Passwörter nicht Klartext speichern oder übermitteln
+* PW Recovery Mechanismen sicher umsetzen
+
+
+
