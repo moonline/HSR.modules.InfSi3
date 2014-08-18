@@ -290,7 +290,7 @@ Welche Rechte und Möglichkeiten haben JavaScript (inklusive Html5 API's), Activ
 5.1 OWASP
 ---------
 
-**5.1.3..**
+**5.1.1.**
 Was ist OWASP?
 
 **5.1.2.**
@@ -493,6 +493,58 @@ Was ist MobileID? Was kann es und wem muss dazu vertraut werden?
 ========================
 
 **9.0.1.**
+Was ist der Treiber zur Durchführung von Sicherheitsprüfungen? Nennen Sie 3 Motivationsgründe.
+
+**9.0.2.**
+Warum muss bei einer SP die Bedeutung aller Ebenen beurteilt werden (Prozess/Applikation/Infrastruktur)?
+
+**9.0.3.**
+Nennen Sie einige Testing Actions, Testing Types und Testing Teams.
+
+**9.0.4.**
+Erklären Sie Black- und White Box testing.
+
+**9.0.5.**
+Erklären Sie die Begriffe:
+
+a) Security Audit
+b) Review
+c) Penetrationstests
+
+**9.0.6.**
+Was sind False Positives und False Negatives?
+
+**9.0.7.**
+Nennen Sie einige Vor- und Nachteile von Black- und White Box Tests.
+
+**9.0.8.**
+Erklären Sie die folgenden Begriffe im Zusammenhang mit Prüftiefe:
+
+a) Plausibilisierung
+b) Inspektion
+c) Prüfung
+
+
+**9.0.9.**
+Wie läuft eine SP ab? Was wir auf welchen Ebenen geprüft?
+
+**9.0.10.**
+Welche Vor- und Nachteile bieten automatische Tests/Scanners?
+
+**9.0.11.**
+Wie müssen SP dokumentiert werden?
+
+**9.0.12.**
+Nennen Sie ungeführe Aufwände für:
+
+a) Application Security Review (White-Box)
+b) Penetrationstest (Black-Box)
+c) etwork Security Review (Grosse Netzwerke)
+
+**9.0.13.**
+Nennen Sie einige typische Fehler, die bei Sicherheitsprüfungen gemacht werden.
+
+
 
 
 
