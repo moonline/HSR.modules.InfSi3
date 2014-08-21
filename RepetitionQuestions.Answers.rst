@@ -771,4 +771,121 @@ Massnahmen:
 * PW Recovery Mechanismen sicher umsetzen
 
 
+**5.1.5. XSS**
 
+Cross-Site Scripting
+	Ausführen von eingeschleustem Javascript Code auf einem andern Client
+Arten
+	Stored
+		* Der Code wird serverseitig persistiert und mit der Seite ausgeliefert.
+		* Bsp: Ein Angreifer schreibt ein Snippet in ein Gästebuch. Jeder, der die Einträge anschaut, führt das eingebettete Script aus
+	Reflected
+		* Ein Angreifer schreibt ein Snippet in ein Eingabefeld, das sofort andern Benutzern dargestellt wird
+		* Bsp: Search History
+Gegenmassnahmen
+	* Escaping of output: Steuerzeichen für Scripts Escapen (<,>,',")
+	* validate input (reject, delete or replace "dangerious" characters or tags)
+	* CSP (Content Security policy)
+
+
+6 Web Application Security 2
+============================
+
+6.1 Injection
+-------------
+
+**6.1.1. Port 80 & Firewalls**
+
+Gegen Angriffe auf Application Level über Port 80 nützt eine Firewall nichts. Wenn sie Port 80 blockieren würde, würde aller Verkehr geblockt.
+
+
+**6.1.2. Angriffe / Layer**
+
+Die unteren Layer sind mittlerweile sehr sicher implementiert und Schwachstellen ausgemerzt. Auf Application Level hingegen werden es mit jeder Applikation, die am Netz hängt neue.
+
+
+**6.1.3. SQL Injection**
+
+Der Angreifer bricht mit einem Steuerzeichen aus dem Kontext (Value) aus und kann dann fast beliebig Kommandos hnzufügen.
+
+.. code-block:: php
+
+	// search for employee to list them
+	$employeeName = $_POST["searchName"];
+	$statement = "SELECT name, image FROM employees WHERE name LIKE '%"+$employeeName+"%'";
+	
+	
+Ein Angreifer beendet durch einfügen eines ' das Statement, fügt ein beliebiges Kommando hinzu und kommentiert den Rest aus:
+
+::
+
+	Hans%' UNION SELECT username, password FROM employee WHERE '' == '
+	
+
+Dadurch entsteht das folgende Statement, das noch die Benutzernamen und Passwörter der Angestellten ausgibt:
+
+.. code-block:: sql
+
+	SELECT name, image FROM employees WHERE name LIKE '%Hans%' UNION SELECT username, password FROM employee WHERE '' == ''
+	
+	
+**6.1.4. Technische Grundlage**
+
+Siehe Beispiel Vorherige Frage.
+
+Der Angreifer bricht mit ' oder -- aus dem Value-Kontext in den Steuerungskontext aus.
+
+
+**6.1.5. EXEC**
+
+* Der Angreifer kann alles ausführen, was der DB User auch kann. Kann er z.B. mit EXEC eine Remote Shell aufmachen, kann er beliebig Schadcode nachladen und asführen.
+* Zudem kann er Verbindungen aufmachen intern, die nur lokale User können (z.B. Application Server angreifen)
+
+
+**6.1.6. Blind / Time-Based SQL Injection**
+
+Blind SQL Injection
+	Um herauszufinden ob überhaupt Injection möglich ist: illegales Statement produzieren -> Wenn ein Fehler ausgegeben wird, hat die Injection funktioniert, auch wenn ansonsten über eine Injection kein Output ausgegeben werden kann.
+Time Based
+	An das Statement ein Command anhängen, das länger läuft (z.B. Benchmark). Funktioniert die Injection, verlängert sich die Antwortzeit des Servers -> Wenn keine Blind Injection möglich ist, weil keine Fehlermeldungen ausgegeben werden.
+	
+
+**6.1.7. User Defined Functions**
+
+Kann ein Angreifer über Injection User Defined Functions erzeugen, kann er unter Umständen aus der DB ausbrechen und z.B. ein Tunnel nach aussen aufbauen, durch den er weiteren Code ausführen kann.
+
+
+**6.1.8. Massnahmen gegen Injection**
+
+* Escaping (Steuerzeichen wie ' oder -- escapen) -> keine 100%ige Sicherheit
+* White/Blacklisting von Zeichen beim Input -> Nur mittelmässige Sicherheit
+* Prepared Statements -> Sicher
+* KEINE Dynamischen Prepared Statements!
+* Rechte des DB Users beschränken -> darf nur das, was er wirklich muss
+* Application Server Rechte einschränken -> darf nur das tun, was er wirklich muss
+* Kein direkter Zugriff auf Application- und DB-Server
+* Richtiges Error Message Handling
+
+
+**6.1.9. Prepared Statement Vulnerability**
+
+Kommt innerhalb eines Prepared Statement ein dynamischer Parameter vor, so ist dieser ebenfalls verwundbar.
+
+.. code-block:: php
+
+	$stmt = prepareStatement("UPDATE COFFEES SET SALES=? WHERE COF_NAME "+ "LIKE '" + name + "'"); // insecure usage
+
+
+6.2 Authentication & Session Management
+---------------------------------------
+
+**6.2.1. Begriffe**
+
+Authentication
+	Wer Zugriff haben darf auf App
+Authorization
+	Welche Operationen ein User mit der App machen darf
+Identification
+	Verifizieren der Identität
+	
+	
