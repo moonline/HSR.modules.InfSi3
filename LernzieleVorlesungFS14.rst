@@ -1,6 +1,9 @@
 ====================================
-Lernziele (Vorlesungsfolien) & Chats
+Lernziele & Chats (Vorlesungsfolien)
 ====================================
+
+Lernziele, Chats & Fallstudien der Vorlesungsfolien (wo vorhanden).
+
 
 
 1 Information Security Management
@@ -179,10 +182,12 @@ Lernziele (Vorlesungsfolien) & Chats
 	6. Nutzungsrichtlinien schulen (z.B. Umgang mit E-Mail, Spam 	und Downloads)
 	7. Wichtiges beim Surfen schulen (z.B. Browser Einstellungen, Suchmaschinen, was ist gefährlich und vieles mehr)
 	8. Sensitive Daten verschlüsselt abspeichern
-
+	
 
 9 Smartphone Platform & Process Security
 ========================================
+
+:SelbstStudium: ENISA_Smartphone_Security_Appstores_v28_2013.pdf
 
 
 
