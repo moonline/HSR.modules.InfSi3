@@ -6,6 +6,8 @@ Summary Appstore security (ENISA)
 :ENISA: European Network and Information Security Agency
 
 
+.. contents:: Inhaltsverzeichnis
+
 
 Executive Summary
 =================
