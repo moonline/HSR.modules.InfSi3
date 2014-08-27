@@ -154,6 +154,18 @@ Welche Informationen erhält Google über einen Nutzer?
 **2.1.16.**
 Was ist ein Browser Fingerprint und wie genau lassen sich Nutzer damit identitifizieren?
 
+**2.1.17.**
+Was ist AGPS?
+
+**2.1.18.**
+Alternativen zu GPS?
+
+**2.1.19.**
+Wie werden GPS Satelliten korrigiert (Positionsdaten driften)?
+
+**2.1.20.**
+Wie viele Satelliten werden für eine Triangulation benötigt?
+
 
 3 Software Security
 ===================
@@ -446,6 +458,11 @@ Welche ANgriffe werden Auf Kommunikationschannels gefahren?
 **7.0.11.**
 Wozu dienen Apps wie Flexspy und welche Probleme bringen sie mit sich?
 
+**7.0.12.**
+Sie können Sicherheitsprobleme im Smartphone Umfeld beschreiben und mit denjenigen der PCWelt vergleichen.
+
+**7.0.13.**
+Sie kennen Mobile Security Top 10 Listen und können einzelne Punkte anhand von Beispielen erklären.
 
 
 8 Smartphone Security
@@ -547,7 +564,14 @@ c) etwork Security Review (Grosse Netzwerke)
 **9.0.13.**
 Nennen Sie einige typische Fehler, die bei Sicherheitsprüfungen gemacht werden.
 
+**9.0.14.**
+Worin unterscheiden sich die beiden Ansätze (Blackbox / Whitebox) in Bezug auf das Wissen des Angreifers und des Angegriffenen? (Geben Sie jeweils «hoch» und «tief» an.)
 
+**9.0.15.**
+Im Rahmen eines Prüfauftrages soll festgestellt werden, ob die eingesetzten Firewalls einen «angemessenen» Schutz bieten. Geben Sie Beispiele an, was auf den folgenden Ebenen geprüft werden sollte?
+
+**9.0.16.**
+Tools für automatisierte Tests?
 
 
 
