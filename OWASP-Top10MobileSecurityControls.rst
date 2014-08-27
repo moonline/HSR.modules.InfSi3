@@ -97,10 +97,66 @@ Top 10 mobile controls and design principles
 
 1) Die Sicherheit / **Vertrauenswürdigkeit** jeder 3rdParty Library/Code in der eigenen App überprüfen.
 2) 3rdParty Library/Codes auf **Sicherheitpatches** überwachen und einspielen
-3) **aten validieren**, die von 3rdParty Apps geliefert werden, bevor die Applikaton sie verarbeitet.
+3) **Daten validieren**, die von 3rdParty Apps geliefert werden, bevor die Applikaton sie verarbeitet.
 
 
 7. Pay specific attention to the collection and storage of consent for the collection and use of the user’s data
 =================================================================================================================
 
+:Risiko: Ungewolltes preisgeben von persönlichen oder privaten Informationen, illegale Datenverarbeitung
 
+
+1) **Privacy policy** einführen, dem User verfügbar machen, wenn er sein Einverständnis für einen Zugriff geben muss
+2) **Einverständnisse** können auf verschiedene Arten zusammengafasst werden:
+	* Zum Installationszeitpunkt
+	* Zur Laufzeit wenn Daten übermittelt werden
+	* Voreinstellungen, die der User nach Bedarf umstellen kann
+	
+3) Überprüfen, ob Apps **Einwilligungen sammeln**
+4) **Kommunikation überprüfen**, um unbewusst freigegebene Daten aufzudecken
+5) Einwilligung zur Übertragung von Daten speichern und dem Benutzer bei jeder **Übertragung wieder anzeigen**
+6) Überprüfen, ob sich einzelne **Einwilligungen überlappen oder im Konflikt stehen**
+
+
+8. Implement controls to prevent unauthorized access to paid-for resources (wallet, SMS, phone calls etc.)
+=================================================================================================================
+
+:Risiko: Apps geben automatischen Zugriff auf Premium Dienste (kostet)
+
+
+1) Logs von Zugriff auf zahlungspflichtige Ressourcen in einem nicht manipulierbaren Format speichern und dem user für Monitoring zur Verfügung stellen
+2) Benutzung von zahlungspflichtige Ressourcen auf ungewöhnliche Benutzungsmuster scannen und Reauthentication detektieren
+3) White-listing verwenden für zahlungspflichtige Ressourcen, z.B. Anrufe, SMS
+4) API Calls für zahlungspflichtige Ressourcen authentisieren
+5) Sicherstellen, das Wallet API calls keine Klartextinformationen übermitteln
+6) Den Benutzer warnen und Einwilligung verlangen für kostenpflichtiges App Verhalten
+7) Best Practises wie "Fast dormancy", "caching" etc. implementieren um die Signallast für die Basisstation minimal zu halten
+
+
+9. Ensure secure distribution/provisioning of mobile applications
+=================================================================
+
+:Risiko: Alle in diesem Dokument aufgeführten Risiken denkbar
+
+
+1) Apps müssen so designed werden, dass sie update für sicherheitspatches erlauben
+2) Apps über offizielle AppStores ausliefern (bieten Malware Scan)
+3) Feedback Channels für User anbieten für Sicherheitsprobleme
+
+
+10. Carefully check any runtime interpretation of code for errors
+=================================================================
+
+:Risiko: Zur Laufzeit interpretierter Code ermöglicht das einschleusen und ausführen von ungeprüftem Schadcode.
+
+
+1) Runtime code interpretation minimieren, Interpreter mit minimalen Rechten laufen lassen
+2) Umfassende Escape-Syntax angemessen definieren
+3) Interpreter Fuzzy-testen
+4) Interpreter sandboxen
+
+
+Anhang & Referenzen
+===================
+
+Siehe Originaldokument
