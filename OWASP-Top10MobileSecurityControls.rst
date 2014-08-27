@@ -124,13 +124,13 @@ Top 10 mobile controls and design principles
 :Risiko: Apps geben automatischen Zugriff auf Premium Dienste (kostet)
 
 
-1) Logs von Zugriff auf zahlungspflichtige Ressourcen in einem nicht manipulierbaren Format speichern und dem user für Monitoring zur Verfügung stellen
-2) Benutzung von zahlungspflichtige Ressourcen auf ungewöhnliche Benutzungsmuster scannen und Reauthentication detektieren
-3) White-listing verwenden für zahlungspflichtige Ressourcen, z.B. Anrufe, SMS
-4) API Calls für zahlungspflichtige Ressourcen authentisieren
-5) Sicherstellen, das Wallet API calls keine Klartextinformationen übermitteln
-6) Den Benutzer warnen und Einwilligung verlangen für kostenpflichtiges App Verhalten
-7) Best Practises wie "Fast dormancy", "caching" etc. implementieren um die Signallast für die Basisstation minimal zu halten
+1) **Logs** von Zugriff auf zahlungspflichtige Ressourcen in einem nicht manipulierbaren Format speichern und dem user für Monitoring zur Verfügung stellen
+2) Benutzung von zahlungspflichtige Ressourcen auf **ungewöhnliche Benutzungsmuster** scannen und Reauthentication detektieren
+3) **White-listing** verwenden für zahlungspflichtige Ressourcen, z.B. Anrufe, SMS
+4) **API Calls** für zahlungspflichtige Ressourcen **authentisieren**
+5) Sicherstellen, das Wallet API calls **keine Klartextinformationen** übermitteln
+6) Den Benutzer **warnen und Einwilligung** verlangen für kostenpflichtiges App Verhalten
+7) **Best Practises** wie "Fast dormancy", "caching" etc. implementieren um die Signallast für die Basisstation minimal zu halten
 
 
 9. Ensure secure distribution/provisioning of mobile applications
@@ -139,9 +139,9 @@ Top 10 mobile controls and design principles
 :Risiko: Alle in diesem Dokument aufgeführten Risiken denkbar
 
 
-1) Apps müssen so designed werden, dass sie update für sicherheitspatches erlauben
-2) Apps über offizielle AppStores ausliefern (bieten Malware Scan)
-3) Feedback Channels für User anbieten für Sicherheitsprobleme
+1) Apps müssen so designed werden, dass sie **update für sicherheitspatches** erlauben
+2) Apps über **offizielle AppStores** ausliefern (bieten Malware Scan)
+3) **Feedback Channels** für User anbieten für Sicherheitsprobleme
 
 
 10. Carefully check any runtime interpretation of code for errors
@@ -150,10 +150,10 @@ Top 10 mobile controls and design principles
 :Risiko: Zur Laufzeit interpretierter Code ermöglicht das einschleusen und ausführen von ungeprüftem Schadcode.
 
 
-1) Runtime code interpretation minimieren, Interpreter mit minimalen Rechten laufen lassen
-2) Umfassende Escape-Syntax angemessen definieren
-3) Interpreter Fuzzy-testen
-4) Interpreter sandboxen
+1) **Runtime code interpretation minimieren**, Interpreter mit minimalen Rechten laufen lassen
+2) Umfassende **Escape-Syntax** angemessen definieren
+3) Interpreter **Fuzzy-testen**
+4) Interpreter **sandboxen**
 
 
 Anhang & Referenzen
